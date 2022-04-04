@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
 import styles from './styles.module.scss'
 const Header = () => {
     return (
