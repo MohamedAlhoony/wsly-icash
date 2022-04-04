@@ -1,20 +1,5 @@
 import React from 'react'
 import styles from './styles.module.scss'
-// import { Alert } from 'react-bootstrap'
-// const getStatus = (status) => {
-//     switch (status) {
-//         case 1:
-//             return 'الطلبية تم قبولها بالفعل'
-//         case 2:
-//             return 'الطلبية قيد التجهيز'
-//         case 3:
-//             return 'الطلبية جاهزة للتوصيل'
-//         case 4:
-//             return 'الطلبية تم أخذها'
-//         default:
-//             return ''
-//     }
-// }
 const Stepper = (props) => {
     return (
         <ol className={styles.stepperList}>
@@ -35,9 +20,6 @@ const Stepper = (props) => {
                 <p>تم أخذها</p>
             </li>
         </ol>
-        // <Alert className="text-center my-3" variant="success">
-        //     <h4>{getStatus(props.status)}</h4>
-        // </Alert>
     )
 }
 

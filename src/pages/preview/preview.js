@@ -10,13 +10,11 @@ const Preview = (props) => {
     const [searchParams] = useSearchParams()
     const doToken = searchParams.get('DOToken')
     useEffect(() => {
-        if (!props.data) {
-            props.dispatch(actions.getData({ doToken })).then((data) => {
-                if (data.OrderDetails?.Status === 0) {
-                    navigate(`/?DOToken=${doToken}`)
-                }
-            })
-        }
+        props.dispatch(actions.getData({ doToken })).then((data) => {
+            if (data.OrderDetails?.Status === 0) {
+                navigate(`/?DOToken=${doToken}`)
+            }
+        })
     }, [doToken, navigate, props])
     return (
         <Row>
