@@ -1,0 +1,23 @@
+.activeNavItem {
+    text-decoration: underline;
+    text-decoration-color: #f5a62b;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.5rem;
+    margin: 0.5rem 1rem;
+    color: white;
+}
+.navItem {
+    color: white;
+    margin: 0.5rem 1rem;
+    text-decoration: none;
+}
+.activeNavItem:hover {
+    color: white;
+}
+.navItem:hover {
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: #f5a62b;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.5rem;
+}

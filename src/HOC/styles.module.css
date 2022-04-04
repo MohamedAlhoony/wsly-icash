@@ -1,0 +1,37 @@
+.mainContainer {
+    max-width: 1250px;
+    min-height: 100vh;
+}
+.backgroundShape1Wrapper {
+    display: flex;
+    padding: 0;
+    justify-content: flex-end;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    max-width: 55%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.backgroundShape1Wrapper img {
+    max-width: 100%;
+}
+
+@media (max-width: 1280px) {
+    .mainContainer {
+        max-width: 981px;
+    }
+}
+@media (max-width: 991px) {
+    .backgroundShape1Wrapper {
+        display: none;
+    }
+    .mainContainer {
+        max-width: 757px;
+    }
+}
+@media (max-width: 767px) {
+    .mainContainer {
+        max-width: 565px;
+    }
+}
