@@ -31,15 +31,18 @@ const Home = (props) => {
             </Col>
             <Col xs={12}>
                 {props.data && (
-                    <Map
-                        store={{
-                            lat: props.data?.OrderDetails?.FromLat,
-                            lang: props.data?.OrderDetails?.FromLang,
-                        }}
-                        onMapClick={onMapClick}
-                        handleMarkerClick={handleMarkerClick}
-                        locations={props.data?.ClientLocations}
-                    />
+                    <>
+                        <h3>حدد موقعك:</h3>
+                        <Map
+                            store={{
+                                lat: props.data?.OrderDetails?.FromLat,
+                                lang: props.data?.OrderDetails?.FromLang,
+                            }}
+                            onMapClick={onMapClick}
+                            handleMarkerClick={handleMarkerClick}
+                            locations={props.data?.ClientLocations}
+                        />
+                    </>
                 )}
             </Col>
             <Col className={'mt-2 d-flex justify-content-end'}>
