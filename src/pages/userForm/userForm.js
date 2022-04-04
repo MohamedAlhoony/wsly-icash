@@ -14,7 +14,7 @@ const UserForm = (props) => {
     }
     const submit = () => {
         props.dispatch(actions.submitForm({ doToken })).then(() => {
-            navigate('/successfully-submitted')
+            navigate(`/successfully-submitted/?DOToken=${doToken}`)
         })
     }
     return (
