@@ -23,14 +23,15 @@ const Header = () => {
                         >
                             الرئيسية
                         </NavLink> */}
-                        <NavLink
-                            to="/about"
-                            className={({ isActive }) =>
-                                isActive ? styles.activeNavItem : styles.navItem
-                            }
+                        <a
+                            className={styles.navItem}
+                            href="https://umbrella.ly/about/"
+                            // className={({ isActive }) =>
+                            //     isActive ? styles.activeNavItem : styles.navItem
+                            // }
                         >
                             حول المظلة
-                        </NavLink>
+                        </a>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
