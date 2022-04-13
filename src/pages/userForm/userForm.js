@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import * as actions from '../../redux/actions/userFormPage'
 import styles from './styles.module.scss'
-// import OrderInfo from '../home/orderInfo/orderInfo'
 const UserForm = (props) => {
+    const data = props.data
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const doToken = searchParams.get('DOToken')
@@ -13,10 +13,22 @@ const UserForm = (props) => {
         props.dispatch({ type: `userForm_page-${id}-value`, data: value })
     }
     const submit = () => {
-        props.dispatch(actions.submitForm({ doToken })).then(() => {
-            navigate(`/successfully-submitted/?DOToken=${doToken}`)
-        })
+        props
+            .dispatch(actions.submitForm({ doToken }))
+            .then(() => {
+                navigate(`/successfully-submitted/?DOToken=${doToken}`)
+            })
+            .catch((error) => {
+                if (error === 'you are so far from the shop') {
+                    navigate(`/?DOToken=${doToken}`)
+                }
+            })
     }
+    useEffect(() => {
+        if (!data) {
+            navigate(`/?DOToken=${doToken}`)
+        }
+    }, [data, navigate, doToken])
     return (
         <Row className={`d-flex justify-content-center mt-5`}>
             <Col xs={12} lg={6}>
@@ -97,5 +109,6 @@ export default connect(({ userForm_page_reducer, home_page_reducer }) => {
         notes: userForm_page_reducer.notes,
         isLoading: userForm_page_reducer.isLoading,
         submitError: userForm_page_reducer.submitError,
+        selectedLocation: home_page_reducer.selectedLocation,
     }
 })(UserForm)

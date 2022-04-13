@@ -3,7 +3,13 @@ import Header from '../components/header/header'
 import { Container, Col, Row } from 'react-bootstrap'
 import styles from './styles.module.css'
 import { Outlet } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { toastOptionsAction } from '../redux/actions/layout'
+import ToastPopup from '../components/toastPopup/toastPopup'
 const Layout = (props) => {
+    const closeToastPopup = () => {
+        props.dispatch(toastOptionsAction({ ...props.toast, show: false }))
+    }
     return (
         <Container className={styles.mainContainer} fluid>
             <Header />
@@ -26,10 +32,18 @@ const Layout = (props) => {
                         </p>
                     </Col>
                 </Row>
+                <ToastPopup
+                    closeToastPopup={closeToastPopup}
+                    toast={props.toast}
+                />
                 <Outlet />
             </Container>
         </Container>
     )
 }
 
-export default Layout
+export default connect((state) => {
+    return {
+        toast: state.layout_reducer.toast,
+    }
+})(Layout)

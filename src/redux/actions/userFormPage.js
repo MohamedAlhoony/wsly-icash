@@ -1,5 +1,5 @@
 import { base_url } from '../../config'
-
+import { toastOptionsAction } from './layout'
 const sendSubmitForm = ({ doToken, lang, lat, notes, senderName }) => {
     return new Promise(async (resolve, reject) => {
         var myHeaders = new Headers()
@@ -38,7 +38,6 @@ export const submitForm = ({ doToken }) => {
     return (dispatch, getState) => {
         return new Promise(async (resolve, reject) => {
             try {
-                dispatch(setSubmitError(''))
                 const { Lat, Lang } =
                     getState().home_page_reducer.selectedLocation
                 const { senderName, notes } = getState().userForm_page_reducer
@@ -53,8 +52,20 @@ export const submitForm = ({ doToken }) => {
                 dispatch(isLoading(false))
                 resolve()
             } catch (error) {
+                dispatch(
+                    toastOptionsAction({
+                        ...getState().layout_reducer.toast,
+                        msg:
+                            error === 'you are so far from the shop'
+                                ? 'أنت بعيد عن المتجر, قم بإختيار مكان أقرب.'
+                                : error.toString(),
+                        show: true,
+                        header: `فشلت العملية`,
+                        isWarning: true,
+                        isAutoRemove: true,
+                    })
+                )
                 dispatch(isLoading(false))
-                dispatch(setSubmitError(error))
                 reject(error)
             }
         })

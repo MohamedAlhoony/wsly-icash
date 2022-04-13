@@ -12,6 +12,10 @@ export const getData = ({ doToken }) => {
                     type: 'home_page-data',
                     data: orderDetails,
                 })
+                dispatch({
+                    type: 'userForm_page-senderName-value',
+                    data: orderDetails.OrderDetails.ClientName ?? '',
+                })
                 dispatch(isLoading(false))
                 resolve(orderDetails)
             } catch (error) {
