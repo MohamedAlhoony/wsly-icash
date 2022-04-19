@@ -5,8 +5,9 @@ const Header = () => {
     return (
         <Navbar expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="#home">
-                    <img src={'/images/logo.png'} width={250} alt={'logo'} />
+                <Navbar.Brand style={{ fontWeight: 'bold' }}>
+                    المظلة للخدمات الإكترونية
+                    {/* <img src={'/images/logo.png'} width={250} alt={'logo'} /> */}
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse
@@ -29,7 +30,7 @@ const Header = () => {
                             //     isActive ? styles.activeNavItem : styles.navItem
                             // }
                         >
-                            حول المظلة
+                            حول الشركة
                         </a>
                     </Nav>
                 </Navbar.Collapse>
