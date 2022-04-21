@@ -5,6 +5,11 @@ import * as actions from '../../redux/actions/homePage'
 import Map from './map/map'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import OrderInfo from './orderInfo/orderInfo'
+import debounce from 'lodash.debounce'
+let handleCenterChange
+const _handleCenterChange = debounce((value) => {
+    handleCenterChange(value)
+}, 300)
 const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
@@ -27,6 +32,14 @@ const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
     const getUserCurrentLocation = () => {
         dispatch(actions.getCurrentPosition())
     }
+
+    handleCenterChange = (value) => {
+        dispatch({
+            type: 'home_page-mapCenterCoordinations',
+            data: value,
+        })
+    }
+
     return (
         <Row>
             <Col xs={12} className={'my-3'}>
@@ -58,6 +71,9 @@ const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
                                 lat: data?.OrderDetails?.FromLat,
                                 lang: data?.OrderDetails?.FromLang,
                             }}
+                            handleCenterChange={(value) =>
+                                _handleCenterChange(value)
+                            }
                             onMapClick={onMapClick}
                             handleMarkerClick={handleMarkerClick}
                             locations={data?.ClientLocations}

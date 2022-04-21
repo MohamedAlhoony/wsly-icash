@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
     withScriptjs,
     withGoogleMap,
@@ -12,6 +12,13 @@ const handleMarkerClick = (props, item, marker, key) => {
 const MyMapComponent = withScriptjs(
     withGoogleMap((props) => (
         <GoogleMap
+            ref={props.google_map_ref}
+            onCenterChanged={() => {
+                props.handleCenterChange({
+                    Lat: props.google_map_ref.current.getCenter().lat(),
+                    Lang: props.google_map_ref.current.getCenter().lng(),
+                })
+            }}
             onClick={(marker) => {
                 props.onMapClick({ marker })
             }}
@@ -49,9 +56,11 @@ const MyMapComponent = withScriptjs(
         </GoogleMap>
     ))
 )
-const map = (props) => {
+const Map = (props) => {
+    let google_map_ref = useRef(null)
     return (
         <MyMapComponent
+            google_map_ref={google_map_ref}
             {...props}
             isMarkerShown
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk3aFNasenVAyx12Q6qSPKJrthxHm7D4Q&v=3.exp&libraries=geometry,drawing,places"
@@ -62,4 +71,4 @@ const map = (props) => {
     )
 }
 
-export default map
+export default Map
