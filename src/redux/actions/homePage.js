@@ -1,4 +1,5 @@
 import { base_url } from '../../config'
+import { toastOptionsAction } from './layout'
 
 export const getData = ({ doToken }) => {
     return (dispatch, getState) => {
@@ -15,6 +16,13 @@ export const getData = ({ doToken }) => {
                 dispatch({
                     type: 'userForm_page-senderName-value',
                     data: orderDetails.OrderDetails.ClientName ?? '',
+                })
+                dispatch({
+                    type: 'home_page-mapCenterCoordinations',
+                    data: {
+                        Lat: orderDetails.OrderDetails.FromLat,
+                        Lang: orderDetails.OrderDetails.FromLang,
+                    },
                 })
                 dispatch(isLoading(false))
                 resolve(orderDetails)
@@ -47,7 +55,7 @@ export const onMapClick = ({ marker }) => {
         })
         dispatch({
             type: 'home_page-selectedLocation',
-            data: newLocation,
+            data: { ...newLocation, isNewPlace: true },
         })
     }
 }
@@ -68,8 +76,84 @@ export const handleMarkderClick = ({ item, marker, key }) => {
         })
         dispatch({
             type: 'home_page-selectedLocation',
-            data: item,
+            data: { ...item, isNewPlace: false },
         })
+    }
+}
+
+export const getCurrentPosition = () => {
+    return (dispatch, getState) => {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const locations =
+                        getState().home_page_reducer.data.ClientLocations.slice()
+                    locations.splice(-1)
+                    locations.forEach((e) => (e.isSelected = false))
+                    locations.push({
+                        Lat: position.coords.latitude,
+                        Lang: position.coords.longitude,
+                        isSelected: true,
+                    })
+                    dispatch({
+                        type: 'home_page-data',
+                        data: {
+                            ...getState().home_page_reducer.data,
+                            ClientLocations: locations,
+                        },
+                    })
+
+                    dispatch({
+                        type: 'home_page-selectedLocation',
+                        data: {
+                            Lat: position.coords.latitude,
+                            Lang: position.coords.longitude,
+                            isNewPlace: true,
+                        },
+                    })
+                    dispatch({
+                        type: 'home_page-mapCenterCoordinations',
+                        data: {
+                            Lat: position.coords.latitude,
+                            Lang: position.coords.longitude,
+                        },
+                    })
+                    dispatch(
+                        toastOptionsAction({
+                            ...getState().layout_reducer.toast,
+                            msg: 'تم تحديد موقعك على الخريطة بنجاح, اضغط زر التالي للمتابعة.',
+                            show: true,
+                            header: `تحديد الموقع`,
+                            isWarning: false,
+                            isAutoRemove: true,
+                        })
+                    )
+                },
+                function () {
+                    dispatch(
+                        toastOptionsAction({
+                            ...getState().layout_reducer.toast,
+                            msg: 'قم بالسماح لنا بالوصول لموقعك من خلال ضبط الإعدادات.',
+                            show: true,
+                            header: `فشلت العملية`,
+                            isWarning: true,
+                            isAutoRemove: true,
+                        })
+                    )
+                }
+            )
+        } else {
+            dispatch(
+                toastOptionsAction({
+                    ...getState().layout_reducer.toast,
+                    msg: 'خاصية تحديد الموقع غير متاحة.',
+                    show: true,
+                    header: `فشلت العملية`,
+                    isWarning: true,
+                    isAutoRemove: true,
+                })
+            )
+        }
     }
 }
 

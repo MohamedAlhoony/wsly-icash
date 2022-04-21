@@ -5,7 +5,7 @@ import * as actions from '../../redux/actions/homePage'
 import Map from './map/map'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import OrderInfo from './orderInfo/orderInfo'
-const Home = ({ dispatch, data, selectedLocation }) => {
+const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const doToken = searchParams.get('DOToken')
@@ -24,15 +24,35 @@ const Home = ({ dispatch, data, selectedLocation }) => {
     const onMapClick = ({ marker }) => {
         dispatch(actions.onMapClick({ marker }))
     }
+    const getUserCurrentLocation = () => {
+        dispatch(actions.getCurrentPosition())
+    }
     return (
         <Row>
             <Col xs={12} className={'my-3'}>
                 <OrderInfo orderDetails={data?.OrderDetails} />
             </Col>
+
             <Col xs={12}>
                 {data && (
                     <>
-                        <h3>حدد موقعك:</h3>
+                        <Row className="mb-2">
+                            <Col xs={12} className={'mb-2'}>
+                                <h3>حدد موقعك:</h3>
+                            </Col>
+                            <Col
+                                xs={12}
+                                className="d-flex justify-content-start"
+                            >
+                                <Button
+                                    variant="warning"
+                                    onClick={getUserCurrentLocation}
+                                >
+                                    اضغط لتحديد موقعك الحالي
+                                    <i className="bi bi-geo"></i>
+                                </Button>
+                            </Col>
+                        </Row>
                         <Map
                             store={{
                                 lat: data?.OrderDetails?.FromLat,
@@ -41,13 +61,21 @@ const Home = ({ dispatch, data, selectedLocation }) => {
                             onMapClick={onMapClick}
                             handleMarkerClick={handleMarkerClick}
                             locations={data?.ClientLocations}
+                            mapCenterCoordinations={mapCenterCoordinations}
                         />
                     </>
                 )}
             </Col>
+
             <Col className={'mt-2 d-flex justify-content-end'}>
                 <Button
-                    onClick={() => navigate(`/user-form/?DOToken=${doToken}`)}
+                    onClick={() => {
+                        if (selectedLocation.isNewPlace) {
+                            navigate(`/confirm-location/?DOToken=${doToken}`)
+                        } else {
+                            navigate(`/user-form/?DOToken=${doToken}`)
+                        }
+                    }}
                     disabled={!selectedLocation ? true : false}
                     size="lg"
                     variant="warning"
@@ -65,5 +93,6 @@ export default connect(({ home_page_reducer }) => {
         isLoading: home_page_reducer.isLoading,
         data: home_page_reducer.data,
         selectedLocation: home_page_reducer.selectedLocation,
+        mapCenterCoordinations: home_page_reducer.mapCenterCoordinations,
     }
 })(Home)

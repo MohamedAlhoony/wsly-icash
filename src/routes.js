@@ -6,6 +6,7 @@ import Layout from './HOC/layout'
 import UserFormPage from './pages/userForm/userForm'
 import SuccessflySubmittedPage from './pages/successflySubmited/successflySubmitted'
 import Preview from './pages/preview/preview'
+import ConfirmLocation from './pages/confirmLocation/confirmLocation'
 const Router = () => {
     return (
         <Routes>
@@ -17,6 +18,7 @@ const Router = () => {
                     path="/successfully-submitted"
                     element={<SuccessflySubmittedPage />}
                 />
+                <Route path="/confirm-location" element={<ConfirmLocation />} />
                 <Route path={'/*'} element={<PageNotFound />} />
             </Route>
         </Routes>

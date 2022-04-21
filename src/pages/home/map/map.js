@@ -16,11 +16,10 @@ const MyMapComponent = withScriptjs(
                 props.onMapClick({ marker })
             }}
             defaultZoom={props.store.lat && props.store.lang ? 15 : 9}
-            defaultCenter={
-                props.store.lat && props.store.lang
-                    ? { lat: props.store.lat, lng: props.store.lang }
-                    : { lat: 32.8872, lng: 13.1913 }
-            }
+            center={{
+                lat: props.mapCenterCoordinations.Lat,
+                lng: props.mapCenterCoordinations.Lang,
+            }}
         >
             {props.store.lat && props.store.lang && (
                 <Marker
