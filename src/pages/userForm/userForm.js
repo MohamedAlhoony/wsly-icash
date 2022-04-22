@@ -94,7 +94,7 @@ const UserForm = (props) => {
                     size="lg"
                     variant="warning"
                 >
-                    عودة &nbsp;
+                    الرئيسية &nbsp;
                     <i className="bi bi-arrow-right"></i>
                 </Button>
             </Col>

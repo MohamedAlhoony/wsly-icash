@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Map from './map/map'
 import { Row, Col, Button } from 'react-bootstrap'
 import { useSearchParams, useNavigate } from 'react-router-dom'
+import { onMapClick as onMapClickAction } from '../../redux/actions/homePage'
 
 const ConfirmLocation = (props) => {
     const navigate = useNavigate()
@@ -14,11 +15,17 @@ const ConfirmLocation = (props) => {
             navigate(`/?DOToken=${doToken}`)
         }
     }, [selectedLocation, navigate, doToken])
+    const onMapClick = ({ marker }) => {
+        props.dispatch(onMapClickAction({ marker }))
+    }
     return (
         <Row className="mt-3">
             <Col xs={12}>
                 <h3>هل أنت متأكد من موقعك؟</h3>
-                <Map selectedLocation={selectedLocation} />
+                <Map
+                    onMapClick={onMapClick}
+                    selectedLocation={selectedLocation}
+                />
             </Col>
             <Col xs={12} className={'mt-2 d-flex justify-content-end'}>
                 <Button
@@ -28,7 +35,7 @@ const ConfirmLocation = (props) => {
                     size="lg"
                     variant="warning"
                 >
-                    تعديل الموقع &nbsp;
+                    السابق &nbsp;
                     <i className="bi bi-arrow-right"></i>
                 </Button>
                 <Button

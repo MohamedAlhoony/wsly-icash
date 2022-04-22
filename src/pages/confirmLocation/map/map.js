@@ -9,6 +9,9 @@ import {
 const MyMapComponent = withScriptjs(
     withGoogleMap((props) => (
         <GoogleMap
+            onClick={(marker) => {
+                props.onMapClick({ marker })
+            }}
             defaultZoom={20}
             defaultCenter={
                 props.selectedLocation?.Lat && props.selectedLocation?.Lang
