@@ -49,6 +49,16 @@ export const submitForm = ({ doToken }) => {
                     senderName,
                     notes,
                 })
+                dispatch({
+                    type: 'home_page-data',
+                    data: {
+                        ...getState().home_page_reducer.data,
+                        OrderDetails: {
+                            ...getState().home_page_reducer.data.OrderDetails,
+                            Status: 1,
+                        },
+                    },
+                })
                 dispatch(isLoading(false))
                 resolve()
             } catch (error) {

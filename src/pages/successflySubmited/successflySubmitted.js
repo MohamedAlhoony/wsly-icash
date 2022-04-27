@@ -16,6 +16,7 @@ const SuccessflySubmitted = () => {
             <Col xs={12}>
                 <div className="d-grid gap-2">
                     <Button
+                        replace
                         variant="success"
                         to={`/preview/?DOToken=${doToken}`}
                         as={Link}

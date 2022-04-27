@@ -22,7 +22,10 @@ const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
                 }
             })
         }
-    }, [doToken, navigate, data, dispatch])
+        if (data && data.OrderDetails?.Status !== 0) {
+            navigate(`/preview/?DOToken=${doToken}`)
+        }
+    })
     const handleMarkerClick = ({ item, marker, key }) => {
         dispatch(actions.handleMarkderClick({ item, marker, key }))
     }
