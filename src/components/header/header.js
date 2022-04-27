@@ -24,6 +24,8 @@ const Header = () => {
                             الرئيسية
                         </NavLink> */}
                         <a
+                            target={'_blank'}
+                            rel="noreferrer"
                             className={styles.navItem}
                             href="https://umbrella.ly/about/"
                             // className={({ isActive }) =>
