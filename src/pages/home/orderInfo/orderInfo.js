@@ -29,7 +29,7 @@ const OrderInfo = (props) => {
                         {moment
                             .utc(props?.orderDetails?.CreateDate)
                             .local()
-                            .format('DD/MM/YYYY H:mm A')}
+                            .format('DD/MM/YYYY hh:mm A')}
                     </div>
                     <Badge className={styles.badge} bg="warning" pill>
                         <i className="bi bi-clock"></i>
