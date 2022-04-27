@@ -16,7 +16,9 @@ const UserForm = (props) => {
         props
             .dispatch(actions.submitForm({ doToken }))
             .then(() => {
-                navigate(`/successfully-submitted/?DOToken=${doToken}`)
+                navigate(`/successfully-submitted/?DOToken=${doToken}`, {
+                    replace: true,
+                })
             })
             .catch((error) => {
                 if (error === 'you are so far from the shop') {
