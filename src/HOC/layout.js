@@ -28,7 +28,7 @@ const Layout = (props) => {
                             style={{ fontSize: '1.1rem' }}
                             className="text-center"
                         >
-                            رصيدك الآي كاش يوصلك لحوشكم.
+                            {/* رصيدك الآي كاش يوصلك لحوشكم. */}
                         </p>
                     </Col>
                 </Row>

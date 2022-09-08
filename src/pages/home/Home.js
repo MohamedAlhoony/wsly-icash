@@ -9,7 +9,7 @@ import debounce from 'lodash.debounce'
 let handleCenterChange
 const _handleCenterChange = debounce((value) => {
     handleCenterChange(value)
-}, 300)
+}, 100)
 const Home = ({ dispatch, data, selectedLocation, mapCenterCoordinations }) => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
